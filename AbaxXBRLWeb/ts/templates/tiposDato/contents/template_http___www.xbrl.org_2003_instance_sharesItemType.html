@@ -1,0 +1,28 @@
+﻿<div style="text-align:right; padding-right:20px;min-height:25px;" ng-if="!editando">
+    <div ng-if="hecho.TieneNotasAlPie && !xbrlOcultarDetalles">
+        <xbrl:nota-hecho xbrl:hecho="hecho" xbrl:solo-lectura="xbrlSoloLectura"/>
+    </div> 
+    <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+    <i class="fa fa-calculator text-default" 
+       style="cursor:pointer; 
+       float:right; 
+       margin-right:-20px;"></i>
+    <span class="xbrl-visor" xbrl:auto-numeric opciones-auto-numeric="{ vMin: '0', vMax: '999999999999' }" modelo="hecho" expresion="modelo.ValorHecho"></span>
+</div>
+<div style="text-align:right; padding-right:40px;" ng-if="editando">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <input type="text" class="form-control xbrl-editor" ng-model="hecho.ValorHecho" xbrl:auto-numeric opciones-auto-numeric="{ vMin: '0', vMax: '999999999999' }" ng-blur="manejarBlur()" ng-keydown="manejarKeyDown($event)" ng-change="manejarOnChange()" />
+            <xbrl:boton-campo-captura />
+
+            <button class="btn btn-default" 
+                    style="width:40px;" 
+                    type="button" 
+                    ng-mousedown="manejarMousedownBoton()" 
+                    ng-click="manejarClickBoton()">
+                        <i class="text-default" ng-class="fa {{icono}}"></i>
+            </button>
+            <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+        </span>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+﻿<div>
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="cerrarDialogo()">&times;</button>
+        <div class="row m-t-sm">
+            <div class="col-sm-8 m-b-xs">
+                <h4 class="modal-title" translate="TITULO_DETALLE_VALIDACION"></h4>
+            </div>
+            <div class="col-sm-2 m-b-xs">
+                <a href="javascript:void(0);" class="btn btn-rounded btn-sm btn-icon btn-default" ng-show="indiceDetalleOperacionActual > 0" ng-click="presentarAnteriorDetalleOperacion()"><i class="fa fa-arrow-left"></i></a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="javascript:void(0);" class="btn btn-rounded btn-sm btn-icon btn-default" ng-show="(indiceDetalleOperacionActual + 1) < detallesOperaciones.length" ng-click="presentarSiguienteDetalleOperacion()"><i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="col-sm-2 m-b-xs">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+
+        <ul class="breadcrumbDetalleOperaciones" ng-if="breadCrumbs.length>1">
+            <li ng-click="mostrarDetalleOperaciones(breadCrumb.idHecho)" ng-class="{'active':$index==(breadCrumbs.length-1),' ':$index<(breadCrumbs.length-1)}" ng-repeat="breadCrumb in breadCrumbs"><a tooltip="{{breadCrumb.descripcionHecho}}">{{breadCrumb.descripcionCortaHecho}}</a></li>
+        </ul>
+
+        <!--Para definicion de operaciones de calculo-->
+        <div ng-if="!detallesOperaciones[indiceDetalleOperacionActual].EsFormula">
+            <div class="row">
+                <p translate="MENSAJE_DETALLE_VALIDACION"> <span class="font-bold">{{obtenerEtiquetaDeConcepto(detallesOperaciones[indiceDetalleOperacionActual].IdConcepto)}}</span>.</p>
+            </div>
+            <div style="height:{{alturaModal}}px; overflow-y: auto;">
+                <table class="table table-striped b-t b-light overflow-y">
+                    <thead>
+                        <tr ng-if="detallesOperaciones[indiceDetalleOperacionActual].OperacionEjecutada">
+                            <th>Concepto</th>
+                            <th style="min-width:50px; width:50px;" translate="ETIQUETA_PESO"></th>
+                            <th style="min-width:155px; width:155px;" translate="ETIQUETA_VALOR_CALCULADO"></th>
+                            <th style="min-width:200px; width:200px;" translate="ETIQUETA_VALOR"></th>
+                        </tr>
+                        <tr ng-if="!detallesOperaciones[indiceDetalleOperacionActual].OperacionEjecutada">
+                            <th translate="EDITOR_XBRL_TITULO_CONCEPTO"></th>
+                            <th translate="ETIQUETA_ERROR"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="detallesOperaciones[indiceDetalleOperacionActual].OperacionEjecutada" ng-repeat="detalleOperando in detallesOperaciones[indiceDetalleOperacionActual].DetalleOperandos">
+                            <td>{{obtenerEtiquetaDeConcepto(detalleOperando.IdConcepto)}}</td>
+                            <td>{{detalleOperando.Peso}}</td>
+                            <td>
+                                <div ng-if="detalleOperando.TieneDetalleOperaciones" ng-click="mostrarDetalleOperaciones(detalleOperando.IdHecho)" style="cursor:pointer">
+                                    <div style="text-align:right; padding-right:20px;">
+                                        <span ng-class="{'text-danger': detalleOperando.EstadoValidacion == EstadoValidacionInvalido, 'text-default': detalleOperando.EstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': detalleOperando.EstadoValidacion == EstadoValidacionValido}"
+                                              xbrl:auto-numeric
+                                              opciones-auto-numeric="detalleOperando.expresionNumerico"
+                                              expresion="{{obtenerValorCalculado(detalleOperando)}}"
+                                              modelo="detalleOperando"></span>
+                                    </div>
+                                </div>
+                                <div ng-if="!detalleOperando.TieneDetalleOperaciones">
+                                    <div style="text-align:right; padding-right:20px;">
+                                        <span ng-class="{'text-danger': detalleOperando.EstadoValidacion == EstadoValidacionInvalido, 'text-default': detalleOperando.EstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': detalleOperando.EstadoValidacion == EstadoValidacionValido}"
+                                              xbrl:auto-numeric
+                                              opciones-auto-numeric="detalleOperando.expresionNumerico"
+                                              expresion="{{obtenerValorCalculado(detalleOperando)}}"
+                                              modelo="detalleOperando"></span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div ng-if="detalleOperando.TieneDetalleOperaciones && xbrlSoloLectura" ng-click="mostrarDetalleOperaciones(detalleOperando.IdHecho)" style="cursor:pointer">
+                                    <xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true" />
+                                </div>
+                                <div ng-if="!detalleOperando.TieneDetalleOperaciones || !xbrlSoloLectura">
+                                    <xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true" />
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <tfoot ng-repeat="detalleOperando in detallesOperaciones[indiceDetalleOperacionActual].DetalleOperandos" ng-if="$first">
+                        <tr ng-if="detallesOperaciones[indiceDetalleOperacionActual].OperacionEjecutada">
+                            <td colspan="2">{{obtenerEtiquetaDeConcepto(detallesOperaciones[indiceDetalleOperacionActual].IdConcepto)}}</td>
+                            <td>
+                                <div style="text-align:right; padding-right:20px;">
+                                    <span ng-class="{'text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'text-default': hecho.EstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': hecho.EstadoValidacion == EstadoValidacionValido}"
+                                          xbrl:auto-numeric 
+                                          opciones-auto-numeric="detallesOperaciones[indiceDetalleOperacionActual].expresionNumerico"
+                                          expresion="modelo.ValorCalculado"
+                                          modelo="detallesOperaciones[indiceDetalleOperacionActual]">
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <xbrl:campo-captura xbrl:id-concepto="{{detallesOperaciones[indiceDetalleOperacionActual].IdConcepto}}" xbrl:id-contexto="{{detallesOperaciones[indiceDetalleOperacionActual].IdContexto}}" xbrl:id-unidad="{{detallesOperaciones[indiceDetalleOperacionActual].IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true" />
+                            </td>
+                        </tr>
+                        <tr ng-if="!detallesOperaciones[indiceDetalleOperacionActual].OperacionEjecutada">
+                            <td>{{obtenerEtiquetaDeConcepto(detallesOperaciones[indiceDetalleOperacionActual].IdConcepto)}}</td>
+                            <td>{{detallesOperaciones[indiceDetalleOperacionActual].Motivo}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!--Para definicion de formulas-->
+
+        <div ng-if="detallesOperaciones[indiceDetalleOperacionActual].EsFormula">
+            <div class="row">
+                <p>
+                    <span class="btn btn-icon b-2x btn-rounded motivoFormulaIcono" ng-class="{'btn-success' : detallesOperaciones[indiceDetalleOperacionActual].EstadoValidacionFormula == EstadoValidacionValido, 'btn-danger' : detallesOperaciones[indiceDetalleOperacionActual].EstadoValidacionFormula== EstadoValidacionInvalido}" data-toggle="class:nav-xs, show, hide, show">
+                        <i class="fa" ng-class="{'fa-check' : detallesOperaciones[indiceDetalleOperacionActual].EstadoValidacionFormula == EstadoValidacionValido, 'fa-exclamation' : detallesOperaciones[indiceDetalleOperacionActual].EstadoValidacionFormula== EstadoValidacionInvalido}"></i>
+                    </span>
+
+                    <span class="font-bold motivoTextoFormula">
+                        {{generarMotivoFormulaDetalleOperacion(detallesOperaciones[indiceDetalleOperacionActual])}}
+                    </span>
+                </p>
+            </div>
+            <div style="max-height:{{alturaModal}}px; overflow-y: auto;">
+
+                <table class="table table-striped b-t b-light overflow-y" ng-if="!detallesOperaciones[indiceDetalleOperacionActual].ContieneInformacionDimension">
+                    <thead ng-if="!detallesOperaciones[indiceDetalleOperacionActual].ContieneInformacionDimension">
+                        <tr>
+                            <th style="min-width:200px; width:200px;" translate="EDITOR_XBRL_TITULO_CONCEPTO"></th>
+                            <th translate="ETIQUETA_VALOR"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="detalleOperando in detallesOperaciones[indiceDetalleOperacionActual].DetalleOperandos">
+                            <td>{{obtenerEtiquetaDeConcepto(detalleOperando.IdConcepto)}}</td>
+                            <td><xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true"></xbrl:campo-captura></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                <table class="table table-striped b-t b-light overflow-y" ng-if="detallesOperaciones[indiceDetalleOperacionActual].ContieneInformacionDimension">
+                    <thead>
+                        <tr>
+                            <th width="40%" translate="EDITOR_XBRL_TITULO_CONCEPTO"></th>
+                            <th colspan="2" width="20%" translate="ETIQUETA_DIMENSION"></th>
+                            <th style="width:20%;" translate="ETIQUETA_VALOR_CALCULADO"></th>
+                            <th style="width:20%;" translate="ETIQUETA_VALOR"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="detalleOperando in detallesOperaciones[indiceDetalleOperacionActual].DetalleOperandos">
+                            <td width="40%">{{obtenerEtiquetaDeConcepto(detalleOperando.IdConcepto)}}</td>
+
+                            <td colspan="4" width="60%">
+
+                                <table width="100%">
+                                    <tr ng-if="detalleOperando.InformacionDimensiones">
+                                        <td style="width:33%;">
+                                            <span ng-repeat="informacionDimension in detalleOperando.InformacionDimensiones">
+                                                {{obtenerEtiquetaDeConcepto(informacionDimension.dimension)}} : {{obtenerEtiquetaDeMiembro(informacionDimension.miembro,informacionDimension.valorTipificado)}}<br />
+                                            </span>
+                                        </td>
+
+                                        <td style="width:33%;"><xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="true" xbrl:ocultar-detalles="true"></xbrl:campo-captura></td>
+                                        <td style="width:33%;"><xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true"></xbrl:campo-captura></td>
+                                    </tr>
+                                    <tr ng-if="!detalleOperando.InformacionDimensiones">
+                                        <td style="width:33%;">
+                                            &nbsp;
+                                        </td>
+                                        <td style="width:33%;"><xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="true" xbrl:ocultar-detalles="true"></xbrl:campo-captura></td>
+                                        <td style="width:33%;"><xbrl:campo-captura xbrl:id-concepto="{{detalleOperando.IdConcepto}}" xbrl:id-contexto="{{detalleOperando.IdContexto}}" xbrl:id-unidad="{{detalleOperando.IdUnidad}}" xbrl:solo-lectura="xbrlSoloLectura" xbrl:solo-edicion="xbrlSoloEdicion" xbrl:ocultar-detalles="true"></xbrl:campo-captura></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cerrarDialogo()" translate="ETIQUETA_BOTON_CERRAR"></button>
+        </div>
+    </div>

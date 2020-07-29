@@ -1,0 +1,35 @@
+﻿<div class="numericItemType"
+     ng-if="!editando"
+     tooltip="{{generarDescripcionError()}}"
+     ng-class="{'text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'text-default': hecho.EstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': hecho.EstadoValidacion == EstadoValidacionValido}">
+
+    <div ng-if="hecho.TieneNotasAlPie && !xbrlOcultarDetalles">
+        <xbrl:nota-hecho xbrl:hecho="hecho" xbrl:solo-lectura="xbrlSoloLectura" />
+    </div>
+
+    <i class="fa fa-calculator"
+       ng-hide="xbrlOcultarDetalles || !hecho.TieneDetalleOperaciones"
+       ng-click="manejarClickBoton()">
+    </i>
+    <div ng-if="!hecho.TieneOperacionesCalculo && ( hecho.EstadoValidacion == EstadoValidacionValido || hecho.EstadoValidacion == EstadoValidacionInvalido)">
+        <i class="i"
+           ng-class="{'i-cross2 text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'i-checkmark2 text-success': hecho.EstadoValidacion == EstadoValidacionValido}"
+           ng-click="manejarClickBoton()"
+           ng-hide="xbrlOcultarDetalles">
+        </i>
+    </div>
+
+
+    <span class="xbrl-visor" xbrl:auto-numeric opciones-auto-numeric="expresionNumerico" modelo="hecho" expresion="modelo.ValorHecho"></span>
+    <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+</div>
+<div ng-class="{'campo_con_boton': tieneProcesosBotonCampoCaptura }" class="botonCampoCaptura" ng-if="editando">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <input ng-if="::usandoIE" type="text" class="form-control xbrl-editor" ng-model="hecho.ValorHecho" ng-model-options="{ debounce: 500 }" xbrl:auto-numeric opciones-auto-numeric="expresionNumerico" ng-blur="manejarBlur()" ng-keydown="manejarKeyDown($event)" ng-change="manejarOnChange()" />
+            <input ng-if="::!usandoIE" type="text" class="form-control xbrl-editor" ng-model="hecho.ValorHecho" xbrl:auto-numeric opciones-auto-numeric="expresionNumerico" ng-blur="manejarBlur()" ng-keydown="manejarKeyDown($event)" ng-change="manejarOnChange()" />
+            <xbrl:boton-campo-captura />
+            <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+        </span>
+    </div>
+</div>

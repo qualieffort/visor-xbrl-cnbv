@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net" xmlns:db="http://www.springframework.net/database">
+
+  <object name="appConfigPropertyHolder" type="Spring.Objects.Factory.Config.PropertyPlaceholderConfigurer, Spring.Core">
+    <property name="configSections">
+      <value>appProperties</value>
+    </property>
+  </object>
+  
+  <db:provider id="DbProvider"
+               provider="SqlServer-1.1"
+               connectionString="${connStringBD}"/>
+
+
+  <object id="adoTransactionManager" type="Spring.Data.Core.AdoPlatformTransactionManager, Spring.Data">
+    <property name="DbProvider" ref="DbProvider"/>
+  </object>
+
+  <object id="txProxyTemplate" abstract="true" type="Spring.Transaction.Interceptor.TransactionProxyFactoryObject, Spring.Data">
+    <property name="PlatformTransactionManager" ref="adoTransactionManager"/>
+    <property name="TransactionAttributes">
+      <name-values>
+        <add key="*" value="PROPAGATION_REQUIRED"/>
+      </name-values>
+    </property>
+  </object>
+</objects>

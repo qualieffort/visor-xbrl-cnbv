@@ -1,0 +1,40 @@
+﻿<div>
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="cerrarDialogo()">&times;</button>
+        <div class="row m-t-sm">
+            <div class="col-sm-8 m-b-xs">
+                <h4 class="modal-title" translate="ETIQUETA_REFERENCIAS_DE"> <span class="font-bold">{{etiquetaConcepto}}</span></h4>
+            </div>
+            <div class="col-sm-2 m-b-xs">
+                <a href="javascript:void(0);" class="btn btn-rounded btn-sm btn-icon btn-default" ng-show="indiceDetalleReferenciaActual > 0" ng-click="presentarAnteriorReferencia()"><i class="fa fa-arrow-left"></i></a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="javascript:void(0);" class="btn btn-rounded btn-sm btn-icon btn-default" ng-show="(indiceDetalleReferenciaActual + 1) < concepto.Referencias.length" ng-click="presentarSiguienteReferencia()"><i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="col-sm-2 m-b-xs">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <p translate="MENSAJE_REFERENCIA"></p>
+        <table class="table table-striped b-t b-light overflow-y">
+            <thead>
+                <tr>
+                    <th style="min-width:50px; width:50px;" translate="ETIQUETA_PARTE"></th>
+                    <th style="min-width:200px; width:200px;" translate="ETIQUETA_VALOR"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="parteReferencia in concepto.Referencias[indiceDetalleReferenciaActual].Partes">
+                    <td>{{definicionPlantilla.obtenerEtiquetaParteReferencia(parteReferencia.Nombre,xbrlIdioma)}}</td>
+                    <td ng-if="parteReferencia.Nombre=='URI'"><a href="{{parteReferencia.Valor}}" target="_blank" translate="ETIQUETA_IR_REFERENCIA"></a></td>
+                    <td ng-if="parteReferencia.Nombre!='URI'">{{parteReferencia.Valor}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cerrarDialogo()" translate="ETIQUETA_BOTON_CERRAR"></button>
+    </div>
+</div>

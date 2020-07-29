@@ -1,0 +1,91 @@
+﻿div.sub-header {
+    width: 100%;
+    display: table;
+}
+
+    div.sub-header div.header-row {
+        width: 100%;
+        min-height: 15px;
+        display: table-row;
+    }
+
+        div.sub-header div.header-row div.cell-left {
+            width: 35%;
+            float: left;
+        }
+
+        div.sub-header div.header-row div.cell-right {
+            width: 65%;
+            float: right;
+        }
+
+        div.sub-header div.header-row div.cell-left div.label-title {
+            width: 60%;
+            float: left;
+            padding-right: 20px;
+            white-space: nowrap;
+        }
+
+        div.sub-header div.header-row div.cell-left div.value {
+            float: left;
+            width: 40%;
+            margin-left: 0;
+            white-space: nowrap;
+        }
+
+        div.sub-header div.header-row div.cell-right div.value {
+            float: right;
+            width: 23%;
+            padding-right: 0px;
+            white-space: nowrap;
+        }
+
+        div.sub-header div.header-row div.cell-right div.label-title {
+            float: left;
+            width: 77%;
+            padding-right: 20px;
+            white-space: nowrap;
+        }
+
+            div.sub-header div.header-row div.cell-right div.label-title xbrl\:etiqueta-concepto div {
+                float: right;
+            }
+
+            div.sub-header div.header-row div.cell-left div.label-title b div,
+            div.sub-header div.header-row div.cell-right div.label-title b div {
+                padding-left: 0 !important;
+            }
+
+@media (max-width: 1170px) {
+
+    div.sub-header, div.sub-header div.header-row {
+        display: block;
+        float: left;
+    }
+
+        div.sub-header div.header-row div.cell-left,
+        div.sub-header div.header-row div.cell-right {
+            width: auto;
+            float: left;
+        }
+
+            div.sub-header div.header-row div.cell-right div.label-title xbrl\:etiqueta-concepto div {
+                float: none;
+            }
+}
+
+div.sub-header div.header-row div.cell-left div.value div.raw-value {
+    text-align: right;
+    padding-right: 20px;
+}
+
+div.tituloPresentaMoneda {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+div.contenodorBarraGirs,
+div.contenodorBarraGirs div.barraGris {
+    width: 100%;
+    background-color: #00b04e;
+}

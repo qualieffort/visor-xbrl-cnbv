@@ -1,0 +1,34 @@
+﻿
+<div ng-if="!editando || xbrlSoloLectura">
+
+    <div ng-if="hecho.EstadoValidacion == EstadoValidacionValido || hecho.EstadoValidacion == EstadoValidacionInvalido">
+        <i class="i"
+           style="cursor:pointer; float:right;margin-right:-20px;"
+           ng-class="{'i-cross2 text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'i-checkmark2 text-success': hecho.EstadoValidacion == EstadoValidacionValido}"
+           ng-click="manejarClickBoton()"
+           ng-hide="xbrlOcultarDetalles">
+        </i>
+    </div>
+    <div ng-click="validarEstadoBloqueTexto()">
+        <div id="{{hecho.Id}}" ng-class="{'div-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'div-default': !hecho.EstadoValidacion || hecho.EstadoValidacion==EstadoValidacionSinDeterminar,'div-success': hecho.EstadoValidacion == EstadoValidacionValido}">
+            <div ng-bind-html="contenidoHechoHtml" class="celdaAnchoFijo textBlockLimit"></div>
+        </div>
+    </div>
+    <div ng-if="hecho.TieneNotasAlPie && !xbrlOcultarDetalles" style="position:relative;float:left;width:0px;">
+        <xbrl:nota-hecho xbrl:hecho="hecho" xbrl:solo-lectura="xbrlSoloLectura" />
+    </div>
+
+</div>
+
+<div ng-if="editando && !xbrlSoloLectura">
+
+    <div ckeditor ck:on-blur="manejarBlur()" ck:on-focus="manejarFocus()" ng-model="hecho.ValorHecho" style="min-height:200px; margin-bottom:-10px;">
+    </div>
+    <div style="position:relative;height:0px;float:right;width:0px;">
+        <xbrl:boton-campo-captura />
+    </div>
+
+
+</div>
+
+<input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />

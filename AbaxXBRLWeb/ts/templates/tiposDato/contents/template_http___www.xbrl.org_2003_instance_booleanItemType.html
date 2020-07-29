@@ -1,0 +1,25 @@
+﻿<div style="text-align:right; padding-right:20px;min-height:25px;" ng-if="!editando" ng-class="{'div-danger': hecho.ValorEstadoValidacion == EstadoValidacionInvalido, 'div-success': hecho.ValorEstadoValidacion == EstadoValidacionValido}">
+    <div ng-if="hecho.TieneNotasAlPie && !xbrlOcultarDetalles">
+        <xbrl:nota-hecho xbrl:hecho="hecho" xbrl:solo-lectura="xbrlSoloLectura" />
+    </div>
+    <div ng-if="hecho.EstadoValidacion == EstadoValidacionValido || hecho.EstadoValidacion == EstadoValidacionInvalido">
+        <i class="i"
+           style="cursor:pointer; float:right;margin-right:-20px;"
+           ng-class="{'i-cross2 text-danger': hecho.ValorEstadoValidacion == EstadoValidacionInvalido, 'i-checkmark2 text-success': hecho.ValorEstadoValidacion == EstadoValidacionValido}"
+           ng-click="manejarClickBoton()"
+           ng-hide="xbrlOcultarDetalles">
+        </i>
+    </div>
+    <span ng-class="{'text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'text-default': hecho.ValorEstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': hecho.ValorEstadoValidacion == EstadoValidacionValido}">{{valorSeleccionadoPresenta}}</span>
+    <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+</div>
+<div style="text-align:right;" ng-if="editando">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <select name="valor" ng-model="hecho.ValorHecho" ng-required="true" class="form-control" ng-keydown="manejarKeyDown($event)" ng-blur="manejarBlur()" ng-options="valor.valor as valor.etiqueta  for valor in ListaValores " ng-change="manejarOnChange()"></select>
+            <xbrl:boton-campo-captura />
+        </span>
+
+        <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+    </div>
+</div>

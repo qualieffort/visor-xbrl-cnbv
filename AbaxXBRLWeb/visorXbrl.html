@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="abaxXBRL" class="app app js no-touch no-android chrome no-firefox no-iemobile no-ie no-ie8 no-ie10 no-ie11 no-ios">
+<head>
+    <title>.::. CNBV .::.Visor de Archivos XBRL</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="UTF-8">
+    <!--Librerias javascript -->
+    <script type="text/javascript" src="Scripts/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate-1.0.0.js"></script>
+
+    <script type="text/javascript" src="Scripts/angular.js"></script>
+    <script type="text/javascript" src="Scripts/angular-locale/angular-locale_en-us.js"></script>
+    <script type="text/javascript" src="Scripts/angular-locale/angular-locale_es-mx.js"></script>
+    <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-dynamic-locale-master/tmhDynamicLocale.js"></script>
+    <script type="text/javascript" src="Scripts/angular-ui-router/angular-ui-router.js"></script>
+    <script type="text/javascript" src="Scripts/angular-translate.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-fullscreen/angular-fullscreen.js"></script>
+    <script type="text/javascript" src="Scripts/storage-local.js"></script>
+    <script type="text/javascript" src="Scripts/storage-cookie.js"></script>
+    <script type="text/javascript" src="Scripts/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="Scripts/impromptu/jquery-impromptu.min.js"></script>
+    <script type="text/javascript" src="Scripts/angular-local-storage/angular-local-storage.js"></script>
+    <script type="text/javascript" src="js/slimscroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="js/slimscroll/angular-slimscroll.js"></script>
+    <script type="text/javascript" src="Scripts/lazyLoad/ocLazyLoad.js"></script>
+    <script type="text/javascript" src="Scripts/datatables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/angular-datatables/angular-datatables.js"></script>
+    <script type="text/javascript" src="Scripts/angular-route.min.js"></script>
+
+
+    <script type="text/javascript" src="js/loading/jquery.isloading.min.js"></script>
+    <script type="text/javascript" src="js/zip.js/zip.js"></script>
+    <script type="text/javascript" src="js/zip.js/zip-ext.js"></script>
+    
+
+    <!-- PARA EL MODULO DE INICIO-->
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="css/angular-motion.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-additions.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/angular-aside/angular-aside.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/icon.css" />
+    <link rel="stylesheet" type="text/css" href="css/font.css" />
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="css/hipercubos.css" />
+    <link rel="stylesheet" type="text/css" href="css/encabezados.css?version=1.7.7" />
+    <link rel="stylesheet" type="text/css" href="Scripts/datatables/datatables.css" />
+    <link rel="stylesheet" type="text/css" href="Scripts/impromptu/jquery-impromptu.min.css" />
+
+
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-codigo-tecla-enum.inicio.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-constantes.root.js"></script>
+    <!--Modelos-->
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-resultado-operacion.root.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-session.root.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-usuario.root.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-emisora.login.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-credencial.login.js"></script>
+    <!-- Servicios-->
+    <script type="text/javascript" src="abax-xbrl/shared/services/abax-xbrl-request-service.root.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/services/abax-xbrl-session-service.root.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/services/abax-xbrl-utils-service.root.js"></script>
+
+
+
+
+
+
+    <!-- PARA EL CONFIGURACION_MODULO_INICIO-->
+    <link rel="stylesheet" type="text/css" href="Scripts/chosen/chosen.css" />
+    <link rel="stylesheet" type="text/css" href="Scripts/chosen/chosen-spinner.css" />
+    
+    <script type="text/javascript" src="js/autoNumeric/autoNumeric-1.9.22.js" ></script>
+    <script type="text/javascript" src="Scripts/chosen/chosen.jquery.min.js" ></script>
+    <script type="text/javascript" src="Scripts/chosen/chosen.js" ></script>
+    <script type="text/javascript" src="Scripts/moment/moment.js" ></script>
+    <script type="text/javascript" src="Scripts/dirPagination.js" ></script>
+    <script type="text/javascript" src="Scripts/FileSaver.min.js" ></script>
+
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-constantes.inicio.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-tipo-contexto-enum.inicio.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-facultades.inicio.js"></script>
+    <script type="text/javascript" src="abax-xbrl/shared/constantes/abax-xbrl-caracteres-especiales.inicio.js"></script>
+
+    <!--  Modelos -->
+
+    <script type="text/javascript" src="abax-xbrl/shared/modelos/i-resultado-operacion.root.js"></script>
+
+
+    <!-- Visor -->
+
+    <link rel="stylesheet" type="text/css" href="js/datepicker/datepicker.css?version=1.8.6" />
+    <link rel="stylesheet" type="text/css" href="js/slider/slider.css?version=1.8.6" />
+    <link rel="stylesheet" type="text/css" href="js/chosen/chosen.css?version=1.8.6" />
+    <link rel="stylesheet" type="text/css" href="js/impromptu/jquery-impromptu.min.css?version=1.8.6" />
+    
+    <link rel="stylesheet" type="text/css" href="js/toolbartip/jquery.toolbars.css?version=1.8.6" />
+    <link rel="stylesheet" type="text/css" href="js/datatables/datatables.css?version=1.8.6" />
+    <link rel="stylesheet" type="text/css" href="css/layout-default.css?version=1.8.6" />
+    
+    <script type="text/javascript" src="js/fullscreen/jquery.fullscreen-min.js?version=1.8.6"></script>
+
+    <script type="text/javascript" src="js/app.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/slimscroll/jquery.slimscroll.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/xregexp/xregexp-all-min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="ts/jQuery/pluginsXbrl.js?version=1.8.6"></script>
+
+    <script type="text/javascript" src="js/datepicker/bootstrap-datepicker.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/datepicker/locales/bootstrap-datepicker.es.js?version=1.8.6"></script>
+
+    <script type="text/javascript" src="js/app.plugin.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/autocomplete/jquery.autocomplete.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/impromptu/jquery-impromptu.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/toolbartip/jquery.toolbar.js?version=1.8.6"></script>
+
+
+    <script type="text/javascript" src="Scripts/angular-animate.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-cookies.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-resource.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-route.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-sanitize.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-file-upload-shim.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-file-upload.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/slimscroll/angular-slimscroll.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/mask/masks.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/autoNumeric/autoNumeric-1.9.22.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/datepicker/moment.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/ckeditor/ckeditor.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/ngckeditor/angular-ckeditor.js?version=1.8.6"></script>
+
+    <script type="text/javascript" src="js/json/jquery.json.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/math/math.min.js?version=1.8.6"></script>
+    
+    <script type="text/javascript" src="js/angular-ui/ui-bootstrap-custom-0.12.0.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/angular-ui/ui-bootstrap-custom-tpls-0.12.0.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/angular-aside/angular-aside.js?version=1.8.6"></script>
+    
+    <script type="text/javascript" src="js/xml2json/xml2json.min.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/livequery/jquery.livequery.js?version=1.8.6"></script>
+    <script type="text/javascript" src="js/fileDownload/jquery.fileDownload.js?version=1.8.6"></script>
+
+    <script type="text/javascript" src="abax-xbrl/shared/directivas/xbrl-resize/xbrl-resize.js?version=1.8.6"></script>
+    <script type="text/javascript" src="Scripts/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="js/angular-select/angular-select.js"></script>
+
+
+
+    <script type="text/javascript" src="abax-xbrl/shared/modulos/carga-inicial/abax-xbrl-carga-inicial-app.js?versionApp=1.8.7&tagApp=trunk&revisionApp=832"></script>
+
+   
+
+</head>
+<body class="app" >
+    <div oc-lazy-load="abaxXBRL.main" style="display:none;">
+        <section id="splashGeneral" class="scrollable wrapper w-f splash animated">
+            <span class="helper"></span><img id="logoAnimado" src="Images/logo_cnbv_loading.png" class="animated infinite flip">
+        </section>
+
+        <section ui-view="root" ng-controller="abaxXBRLMainController" class="vbox"></section>
+    </div>
+
+    
+
+   
+    <script>
+
+        function getInternetExplorerVersion()
+            // Returns the version of Internet Explorer or a -1
+            // (indicating the use of another browser).
+        {
+            var rv = -1; // Return value assumes failure.
+            if (navigator.appName == 'Microsoft Internet Explorer') {
+                var ua = navigator.userAgent;
+                var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+                if (re.exec(ua) != null)
+                    rv = parseFloat(RegExp.$1);
+            }
+            return rv;
+        }
+        function checkVersion() {
+           
+            var ver = getInternetExplorerVersion();
+
+            if (ver > -1) {
+                if (ver < 10) {
+                    alert("Su navegador de internet no está soportado por el visor de documentos XBRL. Favor de utilizar IE 10+, Chrome, Firefox o Safari.");
+                }
+                    
+            }
+        }
+
+        checkVersion();
+
+    </script>
+</body>
+
+</html>

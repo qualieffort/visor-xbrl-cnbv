@@ -1,0 +1,29 @@
+﻿<div style="text-align:right; padding-right:20px;min-height:25px;"
+     ng-if="!editando"
+     ng-class="{'div-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'div-success': hecho.EstadoValidacion == EstadoValidacionValido}"
+     class="div-default">
+    <div ng-if="hecho.TieneNotasAlPie && !xbrlOcultarDetalles">
+        <xbrl:nota-hecho xbrl:hecho="hecho" xbrl:solo-lectura="xbrlSoloLectura" />
+    </div>
+    <div ng-if="hecho.EstadoValidacion == EstadoValidacionValido || hecho.EstadoValidacion == EstadoValidacionInvalido">
+        <i class="i"
+           style="cursor:pointer; float:right;margin-right:-20px;"
+           ng-class="{'i-cross2 text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'i-checkmark2 text-success': hecho.EstadoValidacion == EstadoValidacionValido}"
+           ng-click="manejarClickBoton()"
+           ng-hide="xbrlOcultarDetalles">
+        </i>
+    </div>
+
+    <span ng-class="{'text-danger': hecho.EstadoValidacion == EstadoValidacionInvalido, 'text-default': hecho.EstadoValidacion == EstadoValidacionSinDeterminar, 'text-success': hecho.EstadoValidacion == EstadoValidacionValido}">{{hecho.ValorHecho}}</span>
+
+    <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+</div>
+<div style="text-align:right;" ng-if="editando">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <input type="text" class="form-control clsDatePicker" ng-model="hecho.ValorHecho" ng-blur="manejarBlur()" ng-keydown="manejarKeyDown($event)" xbrl:date-picker ng-change="manejarOnChange()" />
+            <xbrl:boton-campo-captura />
+            <input type="hidden" id="{{idUltimo}}" ng-if="xbrlUltimo" />
+        </span>
+    </div>
+</div>

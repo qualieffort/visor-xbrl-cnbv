@@ -1,0 +1,13 @@
+﻿<tr>
+    <td><span class="etiquetaConceptoXbrl">{{descripcionConcepto}}</span></td>
+    <td>{{peso}}</td>
+    <td>
+        <div id="divValorCalculado_{{idHecho}}">
+            <xbrl:valor-calculado-hecho xbrl:id-hecho="{{idHecho}}" xbrl:peso="{{peso}}" xbrl:ocultar-detalle-calculo="{{ocultarDetalleCalculo}}"></xbrl:valor-calculado-hecho>
+        </div>
+    </td>
+
+    <td>
+        <xbrl:campo-captura xbrl:id-concepto="{{IdConcepto}}" xbrl:id-contexto="{{IdContexto}}" xbrl:id-unidad="{{IdUnidad}}" xbrl:ocultar-detalles="true" xbrl:solo-lectura="{{xbrlSoloLectura}}" xbrl:solo-edicion="{{xbrlSoloEdicion}}" />
+    </td>
+</tr>

@@ -1,0 +1,44 @@
+{
+  "ListadoDocumentosInstancia": [
+    {
+      "Id": "26",
+      "Emisora": "XIGNUX",
+      "Ejercicio": "2015",
+      "Periodo": "2",
+      "Descripcion": "ifrsxbrl_XIGNUX_2015-2.xbrl",
+      "NombreArchivo": "info_xbrl_26_1.zip",
+      "FechaRecepcion": "19/12/2015",
+      "NombreTaxonomia": "http://www.bmv.com.mx/taxonomy/ifrs_mx/full_ifrs_mc_mx_ics_entry_point_2014-12-05"
+    },
+    {
+      "Id": "25",
+      "Emisora": "DAIMLER",
+      "Ejercicio": "2015",
+      "Periodo": "2",
+      "Descripcion": "ifrsxbrl_DAIMLER_2015-2.xbrl",
+      "NombreArchivo": "info_xbrl_25_1.zip",
+      "FechaRecepcion": "19/12/2015",
+      "NombreTaxonomia": "http://www.bmv.com.mx/taxonomy/ifrs_mx/full_ifrs_mc_mx_ics_entry_point_2014-12-05"
+    },
+    {
+      "Id": "24",
+      "Emisora": "2HSOFT",
+      "Ejercicio": "2015",
+      "Periodo": "2",
+      "Descripcion": "ifrsxbrl_2HSOFT_2015-2.xbrl",
+      "NombreArchivo": "info_xbrl_24_1.zip",
+      "FechaRecepcion": "19/12/2015",
+      "NombreTaxonomia": "http://www.bmv.com.mx/taxonomy/ifrs_mx/full_ifrs_mc_mx_ics_entry_point_2014-12-05"
+    },
+    {
+      "Id": "23",
+      "Emisora": "TELMEX",
+      "Ejercicio": "2015",
+      "Periodo": "2",
+      "Descripcion": "ifrsxbrl_TELMEX_2015-2.xbrl",
+      "NombreArchivo": "info_xbrl_23_1.zip",
+      "FechaRecepcion": "19/12/2015",
+      "NombreTaxonomia": "http://www.bmv.com.mx/taxonomy/ifrs_mx/full_ifrs_mc_mx_ics_entry_point_2014-12-05"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+﻿<aside class="bg-light lt b-r b-light aside-md hidden-print hidden-xs" id="nav" ng-class="{'nav-off-screen' : mostrarMenuNavegacionEnportrait, 'nav-xs': navegacionXS}">
+    <section class="vbox">
+        <section class="w-f scrollable">
+            <div slimscroll="{size: '10px', height: 'auto', railVisible: true, alwaysVisible: false, distance: '0px', railOpacity: 0.2}" slimscrolllistento="resize::resize">
+                <div class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow dk" style="text-align:center" ng-if="enEditorXBRL">
+                    <div  class="navbar-brand">
+                        <img id="abaxlarge" src="Images/logo_cnbv.png" ng-show="!navegacionXS">
+                    </div>
+                </div>
+                <div class="clearfix wrapper dk nav-user hidden-xs">
+                    <div class="dropdown" dropdown>
+                        <a href="" class="dropdown-toggle" dropdown-toggle>
+                            <span class="thumb avatar pull-left m-r">
+                                <img src="Images/a0.png" class="dker" alt="...">
+                                <i class="on md b-light"></i>
+                            </span>
+                            <span class="hidden-nav-xs clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold text-lt">
+                                        {{usuarioSesion.Nombre}} {{usuarioSesion.ApellidoPaterno}}  {{usuarioSesion.ApellidoMaterno}}
+                                    </strong>
+                                    <b class="caret"></b>
+                                </span>
+                                <span class="text-muted text-xs block">{{usuarioSesion.Puesto}}</span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs" role="menu">
+                            <li>
+                                <span class="arrow top hidden-nav-xs"></span>
+                                <a ui-sref="inicio.usuario.cambiarContrasena">{{'ETIQUETA_CAMBIAR_CONTRASENA' | translate}}</a>
+                            </li>
+
+                            <li class="divider"></li>
+                            <li>
+                                <a class="auto" href="" ng-click="cerrarSesion()">{{'ETIQUETA_CERRAR_SESION' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- nav -->
+                <nav class="nav-primary hidden-xs">
+                    <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">{{'ETIQUETA_MENU_OPCIONES' | translate}}</div>
+                    <ul class="nav nav-main">
+                        <li>
+                            <a ui-sref="inicio.panelControl" class="auto">
+                                <i class="i i-statistics icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_TABLERO_CONTROL' | translate}}</span>
+                            </a>
+                        </li>
+                        <li ng-if="tieneFacultadesConfiguracion">
+                            <a href="" class="auto" ng-click="colapsarSubmenuConfigurar = !colapsarSubmenuConfigurar">
+                                <i class="fa fa-gears"></i>
+                                <span class="font-bold">{{'ETIQUETA_CONFIGURAR' | translate}}</span>
+                            </a>
+                            <ul class="nav dk" collapse="colapsarSubmenuConfigurar">
+                                <li class="active" ng-if="tieneFacultadConsultaEmpresas">
+                                    <a id="A1" ui-sref="inicio.empresa.indice" class="auto">
+                                        <i class="fa fa-building-o"></i>
+                                        <span class="font-bold">{{'ETIQUETA_EMPRESA' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li class="active" ng-if="tieneFacultadConsultaRoles">
+                                    <a id="A2" ui-sref="inicio.roles" class="auto">
+                                        <i class="i i-flow-tree"></i>
+                                        <span class="font-bold">{{'ETIQUETA_ROLES' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li class="active" ng-if="tieneFacultadConsultaGrupos">
+                                    <a id="A1" ui-sref="inicio.grupos" class="auto">
+                                        <i class="fa fa-group"></i>
+                                        <span class="font-bold">{{'ETIQUETA_GRUPOS' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li class="active" ng-if="tieneFacultadConsultaUsuarios">
+                                    <a id="A1" ui-sref="inicio.usuario.indice({esUsuarioEmpresa: 0})" class="auto">
+                                        <i class="fa fa-user"></i>
+                                        <span class="font-bold">{{'ETIQUETA_USUARIOS' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li class="active" ng-if="!tieneFacultadConsultaUsuarios && tieneFacultadConsultaUsuariosMismaEmpresa">
+                                    <a id="A1" ui-sref="inicio.usuario.indice({esUsuarioEmpresa: 1})" class="auto">
+                                        <i class="fa fa-user"></i>
+                                        <span class="font-bold">{{'ETIQUETA_USUARIOS_EMPRESA' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li ng-if="tieneFacultadConsultarDatosBitacora">
+                                    <a ui-sref="inicio.bitacora" class="auto">
+                                        <i class="fa fa-list-alt"></i>
+                                        <span class="font-bold">{{'ETIQUETA_BITACORA_AUDITORIA' | translate}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li ng-if="(tieneFacultad(FacultadesEnum.CrearDocumentoInstancia)  && tieneFacultad(FacultadesEnum.GuardarDocumentoInstancia)) ||tieneFacultad(FacultadesEnum.ListadoDocumentoInstancia)">
+                            <a href="" class="auto"
+                               ng-click="colapsarSubmenuEditorXbrl=!colapsarSubmenuEditorXbrl">
+                                <i class="i i-stack icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_EDITOR_XBRL' | translate}}</span>
+                            </a>
+                            <ul class="nav dk" collapse="colapsarSubmenuEditorXbrl">
+                                <li class="active" ng-if="tieneFacultad(FacultadesEnum.CrearDocumentoInstancia) &&  tieneFacultad(FacultadesEnum.GuardarDocumentoInstancia)">
+                                    <a id="edEstado" style="cursor:pointer;" ng-if="!enEditorXBRL" ui-sref="inicio.editorXBRL" class="auto">
+                                        <i class="i i-code"></i>
+                                        <span class="font-bold">{{'ETIQUETA_CREAR_DOCUMENTO_INSTANCIA' | translate}}</span>
+                                    </a>
+                                    <a id="edEstado" style="cursor:pointer;" ng-if="enEditorXBRL" ui-sref="inicio.editorXBRL.DocumentoInstanciaCrearDocumentoInstancia1" class="auto">
+                                        <i class="i i-code"></i>
+                                        <span class="font-bold">{{'ETIQUETA_CREAR_DOCUMENTO_INSTANCIA' | translate}}</span>
+                                    </a>
+                                </li>
+                                <li class="active" ng-if="tieneFacultad(FacultadesEnum.ListadoDocumentoInstancia)">
+                                    <a style="cursor:pointer;" ui-sref="inicio.listaDocumentosInstancia" class="auto">
+                                        <i class="fa fa-th-list"></i>
+                                        <span class="font-bold">{{'ETIQUETA_LISTADO_DE_DOCUMENTOS_INSTANCIA' | translate}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a ui-sref="inicio.alertas" class="auto">
+                                <i class="i i-chat3 icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_ALERTAS' | translate}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="inicio.consultaRepositorio" class="auto">
+                                <i class="i i-meter icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_CONSULTA_REPOSITORIO' | translate}}</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="inicio.mostrarAyuda" class="auto">
+                                <i class="i i-question2 icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_MOSTRAR_AYUDA' | translate}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="auto" href="{{urlSoporteTecnico}}" target="_blank">
+                                <i class="i i-info2 icon"></i>
+                                <span class="font-bold">{{'ETIQUETA_SOPORTE_TECNICO' | translate}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" ng-click="cerrarSesion()" class="auto">
+                                <i class="i i-logout"></i>
+                                <span class="font-bold">{{'ETIQUETA_CERRAR_SESION' | translate}}</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="line dk hidden-nav-xs"></div>
+                </nav>
+                <!-- / nav -->
+            </div>
+        </section>
+
+        <footer class="footer hidden-xs no-padder text-center-nav-xs">
+            <a href="javascript:void(0);" ng-click="cerrarSesion()" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
+                <i class="i i-logout"></i>
+            </a>
+            <a id="btnOcultarMenu"
+               href="javascript:void(0);"
+               ng-click="navegacionXS = !navegacionXS; colapsarSubmenuEditorXbrl = true; colapsarSubmenuConfigurar = true;"
+               class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                <i class="i i-circleleft text"></i>
+                <i class="i i-circleright text-active"></i>
+            </a>
+        </footer>
+    </section>
+</aside>

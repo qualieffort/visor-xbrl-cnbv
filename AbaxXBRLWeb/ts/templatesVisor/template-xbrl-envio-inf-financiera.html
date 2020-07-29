@@ -1,0 +1,144 @@
+﻿<aside>
+    <section class="vbox">
+        <div id="clipboard-container" style="position: fixed; left: 0px; top: 0px; width: 0px; height:0px; z-index: 100; display: block; opacity:0;"></div>
+        <header class="header bg-white b-b clearfix" style="padding-top:5px;">
+            <div class="col-sm-2 m-b-sm">
+            </div>
+
+            <div class="col-sm-8 m-b-sm container">
+                <div class="vbox">
+                    <img src="images/logo_cnbv.png" />
+                </div>
+                <div class="col-sm-2 m-b-sm">
+                </div>
+            </div>
+            <div class="col-sm-2 m-b-sm">
+                <div>
+                    Versi&oacute;n: {{version}}
+                </div>
+            </div>
+
+
+        </header>
+        <section id="splashInterno" class="scrollable wrapper w-f splash" style="display:none;">
+            <span class="helper"></span><img id="logoAnimado" src="Images/logo_cnbv_loading.png" class="animated infinite flip" />
+        </section>
+
+
+
+        <section id="contenedorFormatos" class="wrapper w-f" style="top:80px;bottom:0;">
+
+            <div class="m-b-md" style="color: white;background-color: #18AFA4;text-align:center;font-weight:bold; margin-bottom:0;">
+                <p class="m-b-none">Consulta de informaci&oacute;n financiera enviada en Xbrl</p>
+            </div>
+
+            <div class="col-sm-12 m-b-sm container" style="height:100%;background-color: white;padding-top: 30px;">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12 padder-bottom">
+                        <button class="btn btn-default pull-right" ng-click="limpiaFiltros();">
+                            <i class="fa fa-filter"></i>&nbspLimpiar
+                        </button>
+                    </div>
+                </div>
+                <div class="vbox">
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-xs-12 margin-align-control">
+                            <input type="search" name="search" placeholder="{{'PLACE_HOLDER_CLAVE_PIZARRA' | translate}}" class="form-control" ng-model="clavePizarraSeleccionada" />
+                        </div>
+
+                        <div class="col-lg-2 col-sm-2 col-xs-12 margin-align-control">
+                            <select ng-options="option.Value as option.Label for option in periodicidades" ng-model="periodicidadSeleccionada" ng-change="cambioPeriodicidad(option)" class="form-control">
+                                <option value="">{{'PLACE_HOLDER_SELECCIONE_PERIODICIDAD' | translate}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2 col-sm-2 col-xs-12 margin-align-control">
+                            <select ng-options="option.Value as option.Label for option in listadosOpciones.taxonomias" ng-model="taxonomiaSeleccionada" class="form-control">
+                                <option value="">{{'PLACE_HOLDER_SELECCIONE_TAXONOMIA' | translate}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2 col-sm-2 col-xs-12 margin-align-control">
+                            <select ng-options="k for k in listaEjercicios" ng-model="ejercicioSeleccionado" class="form-control">
+                                <option value="">{{'PLACE_HOLDER_EJERCICIO' | translate}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-xs-12 pull-right">
+                            <div ng-hide="ocultarComboTrimestre">
+                                <select ng-options="k for k in listaTrimestres" ng-model="trimestreSeleccionado" class="form-control">
+                                    <option value="">{{'PLACE_HOLDER_TRIMESTRE' | translate}}</option>
+                                </select>
+                            </div>
+                            <div ng-hide="ocultarComboMensual">
+                                <select ng-options="option.Value as option.Label for option in listaMeses" ng-model="mensualSeleccionado" class="form-control">
+                                    <option value="">{{'PLACE_HOLDER_MES' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="scrollable padder" style="margin-top: 75px;margin-bottom: 25px;">
+
+                        <section class="panel panel-default">
+                            <header class="panel-heading">
+                                Listado de env&iacute;os de informaci&oacute;n financiera
+                                <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data."></i>
+                            </header>
+
+                            <div class="panel-body font-bold" style="background: #eeeeee; padding-left: 30px" ng-if="cargandoEnviosInfFinanciera">
+                                <i class="fa fa-refresh fa-spin"></i>
+                                {{'MENSAJE_INFO_CARGANDO_ENVIOS' | translate}} ...
+                            </div>
+                            <div class="panel-body font-bold" style="background: #eeeeee; padding-left: 30px" ng-if="!cargandoEnviosInfFinanciera && documentosUsuario.length == 0">
+                                {{'MENSAJE_INFO_SIN_RESULTADOS' | translate}}
+                            </div>
+
+                            <div class="table-responsive" ng-show="false">
+                                <button id="btnDetalle" style="display:none" ng-click="obtenerDetalle();"></button>
+                                <table id="tablaInfReEnviada" class="table" datatable="" dt-options="opcionesDataTableDetail" dt-instance="setDtInstance(dtInstance)">
+                                    <thead class="table-bordered">
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive" ng-show="!cargandoEnviosInfFinanciera">
+                                <table id="tablaInfEnviada" class="table table-striped b-t b-light margenesTablaResponsive" datatable="" dt-options="opcionesDataTable" dt-instance="setDtInstance(dtInstance)">
+                                    <thead class="table-bordered">
+                                        <tr>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="5%"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="5%"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="20%" translate="ETIQUETA_FECHA_ENVIO"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="20%" translate="ETIQUETA_CLAVE_PIZARRA"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="20%" translate="ETIQUETA_PERIODO"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="35%" translate="ETIQUETA_TAXONOMIA"></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot class="table-bordered">
+                                        <tr>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" width="5%"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" translate="ETIQUETA_FECHA_ENVIO"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" translate="ETIQUETA_CLAVE_PIZARRA"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" translate="ETIQUETA_PERIODO"></th>
+                                            <th class="th-sortable" data-toggle="class" style="text-align:center;" translate="ETIQUETA_TAXONOMIA"></th>
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </section>
+
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+</aside>
+

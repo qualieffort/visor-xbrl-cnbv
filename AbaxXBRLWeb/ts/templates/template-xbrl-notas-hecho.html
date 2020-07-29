@@ -1,0 +1,65 @@
+﻿<div>
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrarDialogo()">&times;</button>
+        <h4> {{'EDITOR_XBRL_TITULO_NOTAS_PIE_PAGINA'| translate}} </h4>
+    </div>
+    <div class="modal-body">
+        <header class="header bg-white b-b clearfix">
+            <div class="btn-toolbar" style="text-align:right">
+                <input type="button" value="{{'EDITOR_XBRL_TREGISTRAR_NOTA'| translate}}" ng-click="registrarNotaPie()" class="btn btn-default" ng-disabled="{{xbrlSoloLectura}}">
+            </div>
+        </header>
+
+        <section id="contenedorFormatos" class="scrollable wrapper w-f">
+            <p>{{'EDITOR_XBRL_LISTADO_NOTAS_PIE_PAGINA'|translate}}: {{descripcionHecho}}</p>
+
+            <table class="table table-striped b-t b-light overflow-y">
+                <thead>
+                    <tr>
+                        <th style="min-width:200px; width:50px;">Idioma</th>
+                        <th>{{'EDITOR_XBRL_NOTA_PIE_PAGINA' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="!notas || (notas && notas.length==0)">
+                        <td colspan="2">{{'EDITOR_XBRL_SIN_NOTAS_PIE_PAGINA' | translate}}</td>
+                    </tr>
+                    <tr ng-repeat="nota in notas">
+
+                        <td ng-if="!nota.NotaEditando || !idiomaEditando">
+                            <span class="text-default" ng-click="validarEstadoFecha($index)">{{obtenerEtiquetaLenguaje(nota.Idioma)}}</span>
+                        </td>
+
+                        <td ng-if="nota.NotaEditando && !xbrlSoloLectura && idiomaEditando">
+                            <select ng-model="nota.Idioma" class="form-control" ng-change="manejarOnChange()" ng-blur="manejarBlur($index)" ng-options="valor.idioma as valor.etiqueta  for valor in ListaIdiomas"></select>
+                        </td>
+
+                        <td ng-if="!nota.NotaEditando || idiomaEditando">
+
+                            <i class="fa fa-trash-o  text-danger"
+                               style="cursor:pointer; float:right;margin-right:-20px;"
+                               ng-hide="{{xbrlSoloLectura}}"
+                               ng-click="eliminarNotaPie(nota)">
+                            </i>
+
+                            <div style="min-height:100px;" class="div-default" ng-click="validarEstadoBloqueTexto($index)">
+                                <div ng-bind-html="toTrustedHTML(nota.Valor)"></div>
+                            </div>
+
+                        </td>
+                        <td ng-if="nota.NotaEditando && !xbrlSoloLectura && !idiomaEditando">
+                            <div ckeditor contenteditable="true" ng-model="nota.Valor" style="min-height:100px;" class="div-default" ck:on-blur="manejarBlur($index)">
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+             
+        </section>
+
+    </div>
+    <div class="modal-footer">
+        <input type="button" value="{{'ETIQUETA_BOTON_CERRAR' | translate}}" ng-click="cerrarDialogo()" class="btn btn-default">
+    </div>
+</div>

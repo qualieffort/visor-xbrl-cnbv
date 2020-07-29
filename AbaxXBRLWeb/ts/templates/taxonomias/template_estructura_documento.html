@@ -1,0 +1,53 @@
+﻿<br />
+<a href="#" ng-click="mostrarTodosLosHechos()">Mostrar Todos la estructura de hechos</a><br />
+<a href="#" ng-click="mostrarHechosDepurados()">Mostrar estructura de hechos depurada</a><br />
+<div >
+    <div ng-repeat="elementoDocumento in estructuraDocumento.elementos">
+        <div id="contenedorTablaExcel-{{$index}}" class="table-responsive" ng-if="elementoDocumento.tipo==TipoElementoDocumentoTabla && elementoDocumento.mostrarElementoDocumento">
+
+            <table class="table table-striped b-t b-light" xbrl:tabla-excel selector="td:not(:first-child)" selector-contenedor-x="#contenedorTablaExcel-{{$index}}" selector-contenedor-y="#contenedorFormatos" tab-index="1" on-space-or-enter-key="onSpaceOrEnterKey(evento, x, y)" on-after-paste="onAfterPaste(valorPegado, x, y)" on-after-range-paste="onAfterRangePaste(valorPegado, x, y, ancho, alto)" xbrl:solo-lectura="documentoInstancia.BloquearCamposCaptura">
+                <thead>
+                    <tr ng-repeat="renglon in elementoDocumento.tabla.encabezado.tablaEncabezado" ng-init="ultimoRenglon = $last">
+                        <th class="th-sortable" data-toggle="class" style="min-width: 200px;background-color:#f9f9f9;border-right:1px solid #dddddd;border-bottom:0px;border-top:0px;">
+                            &nbsp;
+                        </th>
+                        <th ng-class="{'encabezadoEditorGenericoPredeterminado':renglon[$index].miembroDimension,'encabezadoEditorGenericoAgrupa':!renglon[$index].miembroDimension && renglon[$index].presentaTerminoAgrupacion==false,'encabezadoEditorGenericoTerminaAgrupa':!renglon[$index].miembroDimension && renglon[$index].presentaTerminoAgrupacion==true,'columnaSinHechos':elementoDocumento.tabla.encabezado.tablaEncabezado[elementoDocumento.tabla.encabezado.renglonesEncabezado-1][$index].columnaSinHechos  }" ng-repeat="indiceColumna in obtenerArregloColumnas(elementoDocumento.tabla.encabezado.columnasTotales) track by $index" colspan="{{renglon[$index].numeroColumnas}}" ng-if="!renglon[$index] || renglon[$index].visible">
+                            <span ng-if="renglon[$index].miembroDimension && !renglon[$index].miembroDimension.tieneContextoIndefinido && !renglon[$index].miembroDimension.esDimensionFicticia">
+                                <xbrl:etiqueta-concepto xbrl:idioma="{{documentoInstancia.xbrlIdioma.ClaveIdioma}}" xbrl:id-concepto="{{renglon[$index].miembroDimension.idConceptoMiembro}}" xbrl:nivel-indentacion="0" />
+                            </span>
+
+                            <span ng-if="renglon[$index].miembroDimension && (renglon[$index].miembroDimension.tieneContextoIndefinido || renglon[$index].miembroDimension.esDimensionFicticia)">
+                                {{renglon[$index].miembroDimension.titulo}}
+                            </span>
+
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr xbrl:filtro-busqueda xbrl:filtro="xbrlRol.FiltroBusqueda" ng-repeat="renglon in elementoDocumento.tabla.renglones" ng-init="indiceRenglon = $index" ng-if="renglon.visible">
+                        <td style="text-align:left; width:50%;">
+                            <xbrl:etiqueta-concepto xbrl:idioma="{{documentoInstancia.xbrlIdioma.ClaveIdioma}}" xbrl:id-concepto="{{renglon.idConcepto}}" xbrl:nivel-indentacion="{{renglon.indentacion}}">
+                        </td>
+
+                        <td ng-repeat="indiceColumna in obtenerArregloColumnas(elementoDocumento.tabla.encabezado.columnasTotales) track by $index" ng-class="{'columnaSinHechos':elementoDocumento.tabla.encabezado.tablaEncabezado[elementoDocumento.tabla.encabezado.renglonesEncabezado-1][$index].columnaSinHechos }">
+
+                            <div ng-if="elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].hechoMostrado">
+                                <xbrl:campo-captura xbrl:solo-lectura="documentoInstancia.BloquearCamposCaptura" xbrl:id-concepto="{{elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].hechoMostrado.IdConcepto}}" xbrl:id-contexto="{{elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].hechoMostrado.IdContexto}}" xbrl:id-unidad="{{elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].hechoMostrado.IdUnidad}}" xbrl:valor-default="0" xbrl:ultimo="elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].esUltimoHecho" />
+                            </div>
+
+
+                            <div class="campo_vacio" ng-if="!elementoDocumento.tabla.encabezado.tablaEncabezado[elementoDocumento.tabla.encabezado.renglonesEncabezado-1][$index].columnaSinHechos && !elementoDocumento.tabla.tablaHechos[indiceRenglon][$index].hechoMostrado && !renglon.EsAbstracto">
+                                -
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="elementoDocumento.tipo==TipoElementoDocumentoTitulo && elementoDocumento.mostrarElementoDocumento">
+            <p><xbrl:etiqueta-concepto xbrl:idioma="{{documentoInstancia.xbrlIdioma.ClaveIdioma}}" xbrl:id-concepto="{{elementoDocumento.idConcepto}}" xbrl:nivel-indentacion="{{elementoDocumento.indentacion}}"></p>
+        </div>  
+    </div>
+</div>
